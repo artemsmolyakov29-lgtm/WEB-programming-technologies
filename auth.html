@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход / Регистрация – MyBlog</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <a href="home.html" class="logo">MyBlog</a>
+                <nav class="nav">
+                    <a href="home.html" class="nav__link">Главная</a>
+                    <a href="#" class="nav__link">Категории</a>
+                    <a href="auth.html" class="nav__link active">Войти</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="auth-wrapper">
+                <div class="auth-tabs">
+                    <span class="auth-tab active">Вход</span>
+                    <span class="auth-tab">Регистрация</span>
+                </div>
+
+                <form class="auth-form" id="login-form">
+                    <h2 class="auth-form__title">Вход в аккаунт</h2>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="example@mail.ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Пароль</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <p class="auth-form__hint">Ещё нет аккаунта? <a href="#" class="auth-form__switch">Зарегистрируйтесь</a></p>
+                </form>
+
+                <form class="auth-form" id="register-form" style="display:none;">
+                    <h2 class="auth-form__title">Регистрация</h2>
+                    <div class="form-group">
+                        <label for="reg-name">Имя</label>
+                        <input type="text" id="reg-name" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email</label>
+                        <input type="email" id="reg-email" placeholder="example@mail.ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Пароль</label>
+                        <input type="password" id="reg-password" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password-confirm">Подтверждение пароля</label>
+                        <input type="password" id="reg-password-confirm" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <p class="auth-form__hint">Уже есть аккаунт? <a href="#" class="auth-form__switch">Войдите</a></p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <p>&copy; 2026 MyBlog. Все права защищены.</p>
+                <div class="footer__social">
+                    <a href="#">Telegram</a>
+                    <a href="#">VK</a>
+                    <a href="#">YouTube</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

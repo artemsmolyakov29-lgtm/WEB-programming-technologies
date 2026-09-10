@@ -1,0 +1,399 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #1e293b;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка */
+.header {
+    background: #1e293b;
+    color: #fff;
+    padding: 18px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.header__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.nav {
+    display: flex;
+    gap: 25px;
+}
+
+.nav__link {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav__link:hover,
+.nav__link.active {
+    color: #fff;
+}
+
+/* Основной контент */
+.main {
+    flex: 1;
+    padding: 40px 0;
+}
+
+.page-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* Сетка карточек */
+.posts__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.post-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.post-card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #e2e8f0;
+}
+
+.post-card__content {
+    padding: 20px;
+}
+
+.post-card__title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.post-card__title a {
+    color: #1e293b;
+    text-decoration: none;
+}
+
+.post-card__title a:hover {
+    color: #2563eb;
+}
+
+.post-card__meta {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 15px;
+}
+
+.post-card__category {
+    background: #e2e8f0;
+    padding: 0 10px;
+    border-radius: 20px;
+}
+
+.post-card__excerpt {
+    color: #334155;
+    margin-bottom: 16px;
+}
+
+.post-card__readmore {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.post-card__readmore:hover {
+    text-decoration: underline;
+}
+
+/* Детальная новость */
+.post-full {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.post-full__title {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.post-full__meta {
+    display: flex;
+    gap: 20px;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.post-full__image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.post-full__content p {
+    margin-bottom: 18px;
+}
+
+.post-full__content ul {
+    padding-left: 25px;
+    margin-bottom: 18px;
+}
+
+.comments {
+    margin-top: 40px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 25px;
+}
+
+.comments h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.comment {
+    background: #f8fafc;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.comment__header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.comment__author {
+    font-weight: 600;
+}
+
+.comment__text {
+    color: #1e293b;
+}
+
+/* Авторизация */
+.auth-wrapper {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.auth-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+.auth-tab {
+    font-size: 18px;
+    font-weight: 600;
+    color: #94a3b8;
+    cursor: default;
+}
+
+.auth-tab.active {
+    color: #1e293b;
+    position: relative;
+}
+
+.auth-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #2563eb;
+}
+
+.auth-form__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #334155;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 14px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+.auth-form__hint {
+    text-align: center;
+    margin-top: 16px;
+    color: #64748b;
+}
+
+.auth-form__switch {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-form__switch:hover {
+    text-decoration: underline;
+}
+
+/* Подвал */
+.footer {
+    background: #1e293b;
+    color: #94a3b8;
+    padding: 25px 0;
+    margin-top: 40px;
+}
+
+.footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer__social a {
+    color: #94a3b8;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.2s;
+}
+
+.footer__social a:hover {
+    color: #fff;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .header__inner {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .nav {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .posts__grid {
+        grid-template-columns: 1fr;
+    }
+    .post-full {
+        padding: 20px;
+    }
+    .post-full__title {
+        font-size: 26px;
+    }
+    .auth-wrapper {
+        padding: 20px;
+    }
+    .footer__inner {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer__social a {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 4800px) {
+    .container {
+        padding: 0 12px;
+    }
+    .post-card__image {
+            height: 160px;
+    }
+    .post-full__image {
+        max-height: 250px;
+    }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новостной блог</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <a href="home.html" class="logo">MyBlog</a>
+                <nav class="nav">
+                    <a href="home.html" class="nav__link active">Главная</a>
+                    <a href="#" class="nav__link">Категории</a>
+                    <a href="auth.html" class="nav__link">Войти</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="posts">
+                <h1 class="page-title">Последние новости</h1>
+                <div class="posts__grid">
+
+                    <article class="post-card">
+                        <img src="img/post1.jpg" alt="Изображение новости" class="post-card__image">
+                        <div class="post-card__content">
+                            <h2 class="post-card__title">
+                                <a href="post.html">Запуск новой версии нашего портала</a>
+                            </h2>
+                            <div class="post-card__meta">
+                                <span class="post-card__date">08.09.2026</span>
+                                <span class="post-card__category">Технологии</span>
+                            </div>
+                            <p class="post-card__excerpt">Мы рады сообщить о выходе обновлённой платформы с улучшенным интерфейсом и новыми возможностями...</p>
+                            <a href="post.html" class="post-card__readmore">Читать далее →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <img src="img/post2.jpg" alt="Изображение новости" class="post-card__image">
+                        <div class="post-card__content">
+                            <h2 class="post-card__title">
+                                <a href="post.html">Как выбрать идеальный шрифт для сайта</a>
+                            </h2>
+                            <div class="post-card__meta">
+                                <span class="post-card__date">07.09.2026</span>
+                                <span class="post-card__category">Дизайн</span>
+                            </div>
+                            <p class="post-card__excerpt">Типографика играет ключевую роль в восприятии контента. Делимся советами по подбору шрифтов...</p>
+                            <a href="post.html" class="post-card__readmore">Читать далее →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <img src="img/post3.jpg" alt="Изображение новости" class="post-card__image">
+                        <div class="post-card__content">
+                            <h2 class="post-card__title">
+                                <a href="post.html">Обзор новых возможностей Vue</a>
+                            </h2>
+                            <div class="post-card__meta">
+                                <span class="post-card__date">06.09.2026</span>
+                                <span class="post-card__category">Разработка</span>
+                            </div>
+                            <p class="post-card__excerpt">Фреймворк Vue.js продолжает развиваться. Рассматриваем ключевые нововведения версии 3...</p>
+                            <a href="post.html" class="post-card__readmore">Читать далее →</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <p>&copy; 2026 MyBlog. Все права защищены.</p>
+                <div class="footer__social">
+                    <a href="#">Telegram</a>
+                    <a href="#">VK</a>
+                    <a href="#">YouTube</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
