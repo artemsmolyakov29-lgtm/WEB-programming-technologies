@@ -3,30 +3,61 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 
 class UserController extends Controller
 {
-    private array $users = [
-        ['id' => 1, 'name' => 'Иван Петров', 'email' => 'ivan@example.com'],
-        ['id' => 2, 'name' => 'Елена Смирнова', 'email' => 'elena@example.com'],
-    ];
-
     public function index()
     {
-        return response()->json([
-            'success' => true,
-            'data' => $this->users,
-        ]);
+        $users = User::paginate(10);
+        return UserResource::collection($users);
     }
 
-    public function show(int $id)
+    public function show(string $id)
     {
-        $user = collect($this->users)->firstWhere('id', $id);
+        $user = User::findOrFail($id);
+        return new UserResource($user);
+    }
 
-        if (!$user) {
-            return response()->json(['success' => false, 'message' => 'Пользователь не найден'], 404);
+    public function store(StoreUserRequest $request)
+    {
+        $data = $request->validated();
+
+        $data['password'] = bcrypt($data['password']);
+
+        $user = User::create($data);
+
+        return (new UserResource($user))
+            ->response()
+            ->setStatusCode(201);
+    }
+
+    public function update(StoreUserRequest $request, string $id)
+    {
+        $user = User::findOrFail($id);
+        $data = $request->validated();
+
+        if (isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
         }
 
-        return response()->json(['success' => true, 'data' => $user]);
+        $user->update($data);
+
+        return new UserResource($user);
+    }
+
+    public function destroy(string $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Пользователь успешно удалён'
+        ]);
     }
 }

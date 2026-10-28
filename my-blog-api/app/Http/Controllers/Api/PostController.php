@@ -3,92 +3,60 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Resources\PostResource;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    private array $posts = [
-        [
-            'id' => 1,
-            'title' => 'Запуск новой версии нашего портала',
-            'excerpt' => 'Мы рады сообщить о выходе обновлённой платформы...',
-            'content' => 'Мы рады сообщить, что сегодня состоялся официальный запуск обновлённой версии...',
-            'date' => '2026-09-08',
-            'category' => 'Технологии',
-            'author' => 'Администратор',
-            'image' => 'https://picsum.photos/seed/post1/600/400',
-        ],
-        [
-            'id' => 2,
-            'title' => 'Как выбрать идеальный шрифт для сайта',
-            'excerpt' => 'Типографика играет ключевую роль в восприятии контента...',
-            'content' => 'Выбор шрифта — это искусство...',
-            'date' => '2026-09-07',
-            'category' => 'Дизайн',
-            'author' => 'Дизайнер',
-            'image' => 'https://picsum.photos/seed/post2/600/400',
-        ],
-        [
-            'id' => 3,
-            'title' => 'Обзор новых возможностей Vue',
-            'excerpt' => 'Фреймворк Vue.js продолжает развиваться...',
-            'content' => 'Vue 3 привнёс Composition API...',
-            'date' => '2026-09-06',
-            'category' => 'Разработка',
-            'author' => 'Разработчик',
-            'image' => 'https://picsum.photos/seed/post3/600/400',
-        ],
-    ];
-
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json([
-            'success' => true,
-            'data' => $this->posts,
-            'total' => count($this->posts),
-        ]);
-    }
+        $query = Post::with(['user', 'category'])->withCount('comments');
 
-    public function show(int $id)
-    {
-        $post = collect($this->posts)->firstWhere('id', $id);
-
-        if (!$post) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Пост не найден',
-            ], 404);
+        if ($request->has('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $post,
-        ]);
+        $posts = $query->latest('published_at')->paginate(10);
+
+        return PostResource::collection($posts);
     }
 
-    public function store(Request $request)
+    public function show(string $id)
     {
-        return response()->json([
-            'success' => true,
-            'message' => 'Пост создан (заглушка)',
-            'data' => $request->all(),
-        ], 201);
+        $post = Post::with(['user', 'category'])->withCount('comments')->findOrFail($id);
+        return new PostResource($post);
     }
 
-    public function update(Request $request, int $id)
+    public function store(StorePostRequest $request)
     {
-        return response()->json([
-            'success' => true,
-            'message' => "Пост $id обновлён (заглушка)",
-            'data' => $request->all(),
-        ]);
+        $post = Post::create($request->validated());
+
+        return (new PostResource($post->load(['user', 'category'])))
+            ->response()
+            ->setStatusCode(201);
     }
 
-    public function destroy(int $id)
+    public function update(StorePostRequest $request, string $id)
     {
+        $post = Post::findOrFail($id);
+
+        $post->update($request->validated());
+
+        return new PostResource($post->load(['user', 'category']));
+    }
+
+    public function destroy(string $id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
         return response()->json([
             'success' => true,
-            'message' => "Пост $id удалён (заглушка)",
-        ]);
+            'message' => 'Пост успешно удалён'
+        ], 200);
     }
 }
