@@ -5,55 +5,44 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Repositories\UserRepository;
 
 class UserController extends Controller
 {
+    public function __construct(
+        private UserRepository $repository
+    ) {}
+
     public function index()
     {
-        $users = User::paginate(10);
+        $users = $this->repository->getAll();
         return UserResource::collection($users);
     }
 
-    public function show(string $id)
+    public function show(int $id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->repository->getById($id);
         return new UserResource($user);
     }
 
     public function store(StoreUserRequest $request)
     {
-        $data = $request->validated();
-
-        $data['password'] = bcrypt($data['password']);
-
-        $user = User::create($data);
+        $user = $this->repository->create($request->validated());
 
         return (new UserResource($user))
             ->response()
             ->setStatusCode(201);
     }
 
-    public function update(StoreUserRequest $request, string $id)
+    public function update(StoreUserRequest $request, int $id)
     {
-        $user = User::findOrFail($id);
-        $data = $request->validated();
-
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        } else {
-            unset($data['password']);
-        }
-
-        $user->update($data);
-
+        $user = $this->repository->update($id, $request->validated());
         return new UserResource($user);
     }
 
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $this->repository->delete($id);
 
         return response()->json([
             'success' => true,

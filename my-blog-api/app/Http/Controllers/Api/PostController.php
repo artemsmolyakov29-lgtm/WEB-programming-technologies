@@ -5,54 +5,45 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
-use App\Models\Post;
+use App\Repositories\PostRepository;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct(
+        private PostRepository $repository
+    ) {}
+
     public function index(Request $request)
     {
-        $query = Post::with(['user', 'category'])->withCount('comments');
-
-        if ($request->has('category')) {
-            $query->whereHas('category', function ($q) use ($request) {
-                $q->where('slug', $request->category);
-            });
-        }
-
-        $posts = $query->latest('published_at')->paginate(10);
-
+        $posts = $this->repository->getAll($request->only('category'));
         return PostResource::collection($posts);
     }
 
-    public function show(string $id)
+    public function show(int $id)
     {
-        $post = Post::with(['user', 'category'])->withCount('comments')->findOrFail($id);
+        $post = $this->repository->getById($id);
         return new PostResource($post);
     }
 
     public function store(StorePostRequest $request)
     {
-        $post = Post::create($request->validated());
+        $post = $this->repository->create($request->validated());
 
-        return (new PostResource($post->load(['user', 'category'])))
+        return (new PostResource($post))
             ->response()
             ->setStatusCode(201);
     }
 
-    public function update(StorePostRequest $request, string $id)
+    public function update(StorePostRequest $request, int $id)
     {
-        $post = Post::findOrFail($id);
-
-        $post->update($request->validated());
-
-        return new PostResource($post->load(['user', 'category']));
+        $post = $this->repository->update($id, $request->validated());
+        return new PostResource($post);
     }
 
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
+        $this->repository->delete($id);
 
         return response()->json([
             'success' => true,
